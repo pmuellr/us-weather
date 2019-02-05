@@ -24,7 +24,11 @@ echo "copying image files"
 mkdir -p "$DIST_DIR/images"
 cp -R "$SRC_DIR/images/" "$DIST_DIR/images"
 
+# copy leaflet images
+cp -R "$NODE_MODULES_DIR/leaflet/dist/images/" "$DIST_DIR/images"
+
 # build css 
+echo ""
 echo "building css files"
 lessc "$SRC_DIR/css/index.less" "$DIST_DIR/index.css"
 RC=$?
@@ -33,14 +37,23 @@ then
   exit $RC
 fi
 
-# build js
+# check for dev mode
+WEBPACK_ARGS=
+if [[ ! -z "$DEV_MODE" ]]
+then
+  WEBPACK_ARGS=--env.development
+fi
+
+echo ""
 echo "building js files"
-webpack
+webpack $WEBPACK_ARGS
 RC=$?
 if [ $RC -ne 0 ]
 then
   exit $RC
 fi
 
+# update built-on.txt file
+echo ""
 date "+%Y-%m-%d %H:%M:%S" > $DIST_DIR/built-on.txt
 exit 0

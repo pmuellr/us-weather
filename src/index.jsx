@@ -3,7 +3,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './lib/app.jsx'
+import App from './components/app.jsx'
+
+import WeatherAPI from './lib/weather-api'
 
 if (document.readyState === 'loading') {
   window.addEventListener('load', onLoad)
@@ -11,9 +13,12 @@ if (document.readyState === 'loading') {
   onLoad()
 }
 
-function onLoad () {
+async function onLoad () {
   ReactDOM.render(
     <App />,
-    document.getElementById('body')
+    document.getElementById('app-wrapper')
   )
+
+  const locationInfo = await WeatherAPI.fetchLocationInfo(35.7054, -78.7963)
+  console.log(locationInfo)
 }
