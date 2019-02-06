@@ -19,6 +19,7 @@ const URLS = [
   `/${GH_REPO}/index.html`,
   `/${GH_REPO}/index.css`,
   `/${GH_REPO}/main.js`,
+  `/${GH_REPO}/manifest.webmanifest`,
   `/${GH_REPO}/images/us-weather.png`,
   `https://fonts.googleapis.com/icon?family=Material+Icons`
 ]
