@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 
 import App from './components/app.jsx'
 
-import WeatherAPI from './lib/weather-api'
+const TRY_USING_SERVICE_WORKER = false
 
 if (document.readyState === 'loading') {
   window.addEventListener('load', onLoad)
@@ -14,11 +14,23 @@ if (document.readyState === 'loading') {
 }
 
 async function onLoad () {
+  if (TRY_USING_SERVICE_WORKER) registerServiceWorker()
+
   ReactDOM.render(
     <App />,
     document.getElementById('app-wrapper')
   )
+}
 
-  const locationInfo = await WeatherAPI.fetchLocationInfo(35.7054, -78.7963)
-  console.log(locationInfo)
+async function registerServiceWorker () {
+  if (navigator.serviceWorker == null) return
+
+  try {
+    var registration = navigator.serviceWorker.register('/service-worker.js')
+  } catch (err) {
+    console.log(`service worker registration failed: ${err.message}`)
+    return
+  }
+
+  console.log(`service worker registered with scope: ${registration.scope}`)
 }

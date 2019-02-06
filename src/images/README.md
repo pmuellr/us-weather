@@ -1,17 +1,19 @@
-`cloud-sun-original.png`
+`Emojione_2600.svg.png`
 ================================================================================
 
 scraped from:
 
-- https://commons.wikimedia.org/wiki/File:Font_Awesome_5_solid_cloud-sun.svg
+- https://commons.wikimedia.org/wiki/File:Emojione_2600.svg
 
-This file is licensed under the [Creative Commons Attribution 4.0 International
-license](https://creativecommons.org/licenses/by/4.0/deed.en).	
+This file is licensed under the
+[Creative Commons Attribution-Share Alike 4.0 International license][cc-by-sa-4.0].
 
-Attribution: Font Awesome Free 5.4.1 by @fontawesome - https://fontawesome.com
+Attribution: Emoji One
+
+[cc-by-sa-4.0]: https://creativecommons.org/licenses/by-sa/4.0/deed.en
 
 
-`weather-stuff-us*` 
+`us-weather.*` 
 ================================================================================
 
-derived from `cloud-sun-original.png`
+derived from `Emojione_2600.svg.png`

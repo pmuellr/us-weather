@@ -1,0 +1,16 @@
+{
+  "name": "U.S. Weather",
+  "short_name": "weather",
+  "start_url": "",
+  "display": "standalone",
+  "background_color": "#F0F8FF",
+  "theme_color": "#F0F8FF",
+  "description": "Display weather info from the US National Weather Service.",
+  "icons": [
+    {
+    "src": "images/us-weather.png",
+    "sizes": "1000x1000",
+    "type": "image/png"
+    }
+  ]
+}

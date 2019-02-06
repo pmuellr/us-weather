@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import Leaflet from 'leaflet'
+import Leaflet from '../../lib/leaflet'
 
 import View from './view.jsx'
 import WeatherAPI from '../../lib/weather-api'

@@ -61,9 +61,8 @@ export default class WeatherSummaryView extends View {
       <p><i>last updated at {niceDate(summary.updatedAt)}</i></p>
       {summary.periods.map(period =>
         <div key={period.number}>
-          <hr />
           <h4>{period.name}</h4>
-          <p>{period.detailedForecast}</p>
+          <p className='indent-1em'>{period.detailedForecast}</p>
         </div>
       )}
     </div>

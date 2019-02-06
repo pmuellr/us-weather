@@ -17,7 +17,9 @@ rm -rf "$DIST_DIR"
 # copy the html
 echo "copying html files"
 mkdir -p "$DIST_DIR"
-cp -R "$SRC_DIR/"*.html "$DIST_DIR"
+cp "$SRC_DIR/"*.html "$DIST_DIR"
+cp "$SRC_DIR/"*.webmanifest "$DIST_DIR"
+cp "$SRC_DIR/"service-worker.js "$DIST_DIR"
 
 # copy the images
 echo "copying image files"
