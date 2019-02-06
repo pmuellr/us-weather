@@ -2,62 +2,75 @@
 
 /* global self, caches, fetch */
 
-const CACHE_NAME = 'my-site-cache-v1'
+// see: https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e
 
-var urlsToCache = [
-  '/',
-  'index.css',
-  'icon?family=Material+Icons',
-  'main.js',
-  'manifest.webmanifest',
-  'us-weather.png'
+const GH_REPO = 'us-weather'
+
+// Identifier for this app (this needs to be consistent across every cache update)
+const APP_PREFIX = 'US_Weather_'
+
+// Version of the off-line cache (change this value everytime you want to update cache)
+const VERSION = 'version_01'
+
+const CACHE_NAME = APP_PREFIX + VERSION
+
+const URLS = [
+  `/${GH_REPO}/`,
+  `/${GH_REPO}/index.html`,
+  `/${GH_REPO}/index.css`,
+  `/${GH_REPO}/main.js`,
+  `/${GH_REPO}/images/us-weather.png`,
+  `https://fonts.googleapis.com/icon?family=Material+Icons`
 ]
 
-const TRY_USING_SERVICE_WORKER_ARGHHH = false
+// Respond with cached resources
+self.addEventListener('fetch', function (e) {
+  console.log('fetch request : ' + e.request.url)
+  e.respondWith(
+    caches.match(e.request).then(function (request) {
+      if (request) { // if cache is available, respond with cache
+        console.log('responding with cache : ' + e.request.url)
+        return request
+      } else {
+        // if there are no cache, try fetching request
+        console.log('file is not cached, fetching : ' + e.request.url)
+        return fetch(e.request)
+      }
 
-if (TRY_USING_SERVICE_WORKER_ARGHHH) {
-  self.addEventListener('install', onInstall)
-  self.addEventListener('fetch', onFetch)
-}
+      // You can omit if/else for console.log & put one line below like this too.
+      // return request || fetch(e.request)
+    })
+  )
+})
 
-function onInstall (event) {
-  event.waitUntil(openCaches)
-}
+// Cache resources
+self.addEventListener('install', function (e) {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) {
+      console.log('installing cache : ' + CACHE_NAME)
+      return cache.addAll(URLS)
+    })
+  )
+})
 
-function onFetch (event) {
-  event.respondWith(() => attemptFetch(event))
-}
+// Delete outdated caches
+self.addEventListener('activate', function (e) {
+  e.waitUntil(
+    caches.keys().then(function (keyList) {
+      // `keyList` contains all cache names under your username.github.io
+      // filter out ones that has this app prefix to create white list
+      var cacheWhitelist = keyList.filter(function (key) {
+        return key.indexOf(APP_PREFIX)
+      })
+      // add current cache name to white list
+      cacheWhitelist.push(CACHE_NAME)
 
-async function attemptFetch (event) {
-  const promise = caches.match(event.request)
-
-  try {
-    var response = await promise
-  } catch (err) {
-    console.log(`error fetching cached request: ${event.request} ${err.message}`)
-    return promise
-  }
-
-  if (response != null) {
-    console.log(`returning cached response: ${event.request}`)
-    return response
-  }
-
-  console.log(`request not cached, fetching from scratch: ${event.request}`)
-  return fetch(event.request)
-}
-
-async function openCaches () {
-  const promise = caches.open(CACHE_NAME)
-
-  try {
-    var cache = await promise
-  } catch (err) {
-    console.log(`error opening caches: ${err.message}`)
-    return promise
-  }
-
-  console.log(`opened caches`)
-  cache.addAll(urlsToCache)
-  return promise
-}
+      return Promise.all(keyList.map(function (key, i) {
+        if (cacheWhitelist.indexOf(key) === -1) {
+          console.log('deleting cache : ' + keyList[i])
+          return caches.delete(keyList[i])
+        }
+      }))
+    })
+  )
+})

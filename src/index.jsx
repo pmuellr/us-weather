@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 
 import App from './components/app.jsx'
 
-const TRY_USING_SERVICE_WORKER = false
+const TRY_USING_SERVICE_WORKER = true
 
 if (document.readyState === 'loading') {
   window.addEventListener('load', onLoad)
@@ -25,12 +25,5 @@ async function onLoad () {
 async function registerServiceWorker () {
   if (navigator.serviceWorker == null) return
 
-  try {
-    var registration = navigator.serviceWorker.register('/service-worker.js')
-  } catch (err) {
-    console.log(`service worker registration failed: ${err.message}`)
-    return
-  }
-
-  console.log(`service worker registered with scope: ${registration.scope}`)
+  navigator.serviceWorker.register('/us-weather/service-worker.js', { scope: '/us-weather/' })
 }
