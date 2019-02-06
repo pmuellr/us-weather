@@ -1,7 +1,7 @@
 {
   "name": "U.S. Weather",
   "short_name": "weather",
-  "start_url": ".",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#F0F8FF",
   "theme_color": "#F0F8FF",
