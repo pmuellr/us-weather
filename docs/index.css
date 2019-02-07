@@ -52,6 +52,7 @@ h1 {
 }
 .toolbar-icon {
   width: 24px;
+  vertical-align: bottom;
 }
 .tool-icons button {
   width: 32px;
