@@ -10,6 +10,7 @@ import AddLocationView from './views/add-location.jsx'
 import EditLocationsView from './views/edit-locations.jsx'
 
 import Store from '../lib/store'
+import setImmediate from '../lib/set-immediate'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -29,6 +30,8 @@ export default class App extends React.Component {
     Store.on('locations-changed', locations => {
       this.setState({ locations })
     })
+
+    setupWeatherUpdates()
   }
 
   render () {
@@ -64,6 +67,15 @@ function helpModal () { return <Scrollable> <HelpModal /> </Scrollable> }
 function noLocationsModal () { return <Scrollable> <NoLocationsModal /> </Scrollable> }
 function weatherSummaryView () { return <Scrollable> <WeatherSummaryView /> </Scrollable> }
 function editLocationsView () { return <Scrollable> <EditLocationsView /> </Scrollable> }
+
+function setupWeatherUpdates () {
+  setImmediate(update)
+  setInterval(update, 1000 * 60 * 60)
+
+  function update () {
+    Store.updateWeatherInfoIfNeeded()
+  }
+}
 
 class Scrollable extends React.Component {
   render () {

@@ -45,13 +45,17 @@ export default class AddLocationView extends View {
 AddLocationView.id = 'add-location-view'
 
 function createExistingLocationMarker (map, locationInfo) {
-  const bounds = Leaflet.polygon(locationInfo.bounds, {
-    color: '#0000F0',
-    fillColor: '#F00000',
-    opacity: 0.1,
-    fillOpacity: 0.1
-  })
-  bounds.addTo(map)
+  let bounds = null
+
+  if (locationInfo.bounds != null) {
+    bounds = Leaflet.polygon(locationInfo.bounds, {
+      color: '#0000F0',
+      fillColor: '#F00000',
+      opacity: 0.1,
+      fillOpacity: 0.1
+    })
+    bounds.addTo(map)
+  }
 
   const marker = Leaflet.marker([locationInfo.lat, locationInfo.lng])
 
@@ -65,7 +69,7 @@ function createExistingLocationMarker (map, locationInfo) {
     Store.deleteLocation(locationInfo)
     marker.closePopup()
     marker.remove()
-    bounds.remove()
+    if (bounds != null) bounds.remove()
   }
 
   marker
@@ -85,17 +89,19 @@ async function addPopupInfo (map, marker, popup, lat, lng) {
     return
   }
 
-  const bounds = Leaflet.polygon(locationInfo.bounds, {
-    color: '#0000F0',
-    fillColor: '#F00000',
-    opacity: 0.1,
-    fillOpacity: 0.1
-  })
-  bounds.addTo(map)
+  if (locationInfo.bounds != null) {
+    const bounds = Leaflet.polygon(locationInfo.bounds, {
+      color: '#0000F0',
+      fillColor: '#F00000',
+      opacity: 0.1,
+      fillOpacity: 0.1
+    })
+    bounds.addTo(map)
 
-  marker.addEventListener('popupclose', () => {
-    bounds.remove()
-  })
+    marker.addEventListener('popupclose', () => {
+      bounds.remove()
+    })
+  }
 
   const container = getLocationPopupContent(locationInfo)
   const button = Leaflet.DomUtil.create('button')

@@ -116,6 +116,12 @@ class Store extends RemovableEventEmitter {
     this.emit('location-deleted', locationInfo)
   }
 
+  async updateWeatherInfoIfNeeded () {
+    for (let location of this.getLocations()) {
+      this.getWeatherSummary(location)
+    }
+  }
+
   async getWeatherSummary (location) {
     const id = location.id
     let summary = jsonParse(LocalStorage.getItem(`${KEY_WEATHER_SUMMARY}-${id}`))
