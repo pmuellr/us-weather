@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom'
 
 import App from './components/app.jsx'
 
-const TRY_USING_SERVICE_WORKER = true
-
 if (document.readyState === 'loading') {
   window.addEventListener('load', onLoad)
 } else {
@@ -14,7 +12,8 @@ if (document.readyState === 'loading') {
 }
 
 async function onLoad () {
-  if (TRY_USING_SERVICE_WORKER) registerServiceWorker()
+  const isGitHub = (window.location.hostname.endsWith('.github.io'))
+  if (isGitHub) registerServiceWorker()
 
   ReactDOM.render(
     <App />,

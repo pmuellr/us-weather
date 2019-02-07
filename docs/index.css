@@ -49,6 +49,9 @@ h1 {
 #tool-icons {
   float: right;
 }
+.toolbar-icon {
+  width: 24px;
+}
 #tool-icons button {
   padding: 2px;
   margin: 0 5px;
@@ -56,6 +59,7 @@ h1 {
   outline: none;
   color: #0000A0;
   border-color: #0000A0;
+  background-color: #f0e0b0;
 }
 #content {
   grid-area: content;

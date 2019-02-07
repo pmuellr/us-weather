@@ -1,8 +1,9 @@
 // variables
 
-@header-text-color:         #0000A0;
-@body-background-color:     #F0F8FF;
-@body-background-dev-color: #FFF0F0;
+@header-text-color:              #0000A0;
+@body-background-color:          #F0F8FF;
+@body-background-dev-color:      #FFF0F0;
+@tool-bar-icon-background-color: #f0e0b0;
 
 // directives
 
@@ -65,6 +66,10 @@ h1 {
   float: right;
 }
 
+.toolbar-icon {
+  width: 24px;
+}
+
 #tool-icons button {
   padding: 2px;
   margin: 0 5px;
@@ -72,6 +77,7 @@ h1 {
   outline: none;
   color: @header-text-color;
   border-color: @header-text-color;
+  background-color: @tool-bar-icon-background-color;
 }
 
 #content {

@@ -15,13 +15,22 @@ const VERSION = '%service-worker-cache-version%'
 const CACHE_NAME = APP_PREFIX + VERSION
 
 const URLS = [
-  `/${GH_REPO}/`,
   `/${GH_REPO}/index.html`,
   `/${GH_REPO}/index.css`,
   `/${GH_REPO}/main.js`,
   `/${GH_REPO}/manifest.webmanifest`,
   `/${GH_REPO}/images/us-weather.png`,
-  `https://fonts.googleapis.com/icon?family=Material+Icons`
+  `/${GH_REPO}/images/layers-2x.png`,
+  `/${GH_REPO}/images/layers.png`,
+  `/${GH_REPO}/images/marker-icon-2x.png`,
+  `/${GH_REPO}/images/marker-icon.png`,
+  `/${GH_REPO}/images/marker-shadow.png`,
+  `/${GH_REPO}/images/us-weather.png`,
+  `/${GH_REPO}/images/material-design/ic_add_location_black_48dp.png`,
+  `/${GH_REPO}/images/material-design/ic_edit_location_black_48dp.png`,
+  `/${GH_REPO}/images/material-design/ic_help_black_48dp.png`,
+  `/${GH_REPO}/images/material-design/ic_wb_sunny_black_48dp.png`,
+  `/${GH_REPO}/`
 ]
 
 // Respond with cached resources
