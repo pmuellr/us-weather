@@ -11,24 +11,24 @@ export default class HelpModal extends Modal {
 
       <h3>toolbar icons</h3>
 
-      <ul className='tool-icons'>
-        <li>
+      <div className='tool-icons'>
+        <p>
           <ToolBarIcon icon='wb_sunny' title='display weather summary' />
           - displays weather information
-        </li>
-        <li>
+        </p>
+        <p>
           <ToolBarIcon icon='add_location' title='add a location' />
           - adds a location
-        </li>
-        <li>
+        </p>
+        <p>
           <ToolBarIcon icon='edit_location' title='edit locations' />
           - edit existing locations
-        </li>
-        <li>
+        </p>
+        <p>
           <ToolBarIcon icon='help' title='help' />
           - display this help
-        </li>
-      </ul>
+        </p>
+      </div>
 
       <h3>switching between locations</h3>
 

@@ -3,6 +3,7 @@
 import React from 'react'
 
 import Modal from './modal.jsx'
+import ToolBarIcon from '../../tool-bar-icon.jsx'
 
 export default class NoLocationsModal extends Modal {
   render () {
@@ -11,7 +12,9 @@ export default class NoLocationsModal extends Modal {
 
       <p>
         Add one by clicking the
-        <i className='material-icons'>add_location</i>
+        <span className='tool-icons'>
+          <ToolBarIcon icon='add_location' title='add a location' />
+        </span>
         button in the toolbar above.
       </p>
     </div>

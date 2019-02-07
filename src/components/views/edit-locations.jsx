@@ -6,7 +6,7 @@ import View from './view.jsx'
 
 export default class EditLocationsView extends View {
   render () {
-    return <p>edit locations here</p>
+    return <p>not yet implemented</p>
   }
 }
 
