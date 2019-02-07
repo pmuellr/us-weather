@@ -23,7 +23,7 @@ html, body, #app-wrapper, #app {
 body {
   background-color: @body-background-color;
   font-family: Helvetica;
-  padding: 1em;
+  padding: 0.5em;
   font-size: 120%;
 }
 
@@ -55,6 +55,7 @@ h1 {
   width: 100%;
   min-height: 0;
   margin-top: 0px;
+  margin-bottom: 2px;
   color: @header-text-color;
 }
 
@@ -70,7 +71,7 @@ h1 {
   width: 24px;
 }
 
-#tool-icons button {
+.tool-icons button {
   padding: 2px;
   margin: 0 5px;
   border-radius: 5px;
@@ -110,6 +111,16 @@ h1 {
 .location-display .location-display-details {
   margin-left: 1em;
   font-style: italic;
+  font-size: 80%;
+}
+
+.weather-summary-period-title {
+  margin-bottom: 0;
+}
+
+.weather-summary-period-text {
+  margin-left: 1em;
+  margin-top: 0;
 }
 
 @import (inline) "node_modules/leaflet/dist/leaflet.css";

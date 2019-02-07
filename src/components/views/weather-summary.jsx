@@ -24,12 +24,17 @@ export default class WeatherSummaryView extends View {
 
       this.setState({ location, summary: null })
     }))
+  }
 
-    window.addEventListener('click', handleClick)
-    this.removeListeners.push(() => window.removeEventListener('click', handleClick))
+  componentDidMount () {
+    const contentElement = document.getElementById('content')
+    if (contentElement == null) return
+
+    contentElement.addEventListener('click', handleClick)
+    this.removeListeners.push(() => contentElement.removeEventListener('click', handleClick))
 
     function handleClick (event) {
-      if (event.clientX < window.innerWidth / 2) {
+      if (event.clientX < contentElement.clientWidth / 2) {
         Store.decrCurrentLocation()
       } else {
         Store.incrCurrentLocation()
@@ -56,13 +61,13 @@ export default class WeatherSummaryView extends View {
       </div>
     }
 
+    const extraDetails = `last updated at ${niceDate(summary.updatedAt)}`
     return <div>
-      <LocationDisplay location={location} />
-      <p><i>last updated at {niceDate(summary.updatedAt)}</i></p>
+      <LocationDisplay location={location} extraDetails={extraDetails} />
       {summary.periods.map(period =>
         <div key={period.number}>
-          <h4>{period.name}</h4>
-          <p className='indent-1em'>{period.detailedForecast}</p>
+          <h4 className='weather-summary-period-title'>{period.name}</h4>
+          <p className='weather-summary-period-text'>{period.detailedForecast}</p>
         </div>
       )}
     </div>

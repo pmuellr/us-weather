@@ -29,15 +29,19 @@ class WeatherAPI {
     const name = this._getName(properties)
 
     try {
-      var elevation = await this._getElevation(office, gridX, gridY)
+      var geoInfo = await this._getGeoInfo(office, gridX, gridY)
     } catch (err) {
       return null
     }
 
+    if (geoInfo == null) return null
+
+    const { elevation, bounds } = geoInfo
+
     if (elevation == null) return null
 
     const id = uuidV4()
-    return { id, name, lat, lng, elevation, office, gridX, gridY, timeZone }
+    return { id, name, lat, lng, elevation, bounds, office, gridX, gridY, timeZone }
   }
 
   // fetch weather summary
@@ -84,7 +88,7 @@ class WeatherAPI {
     return `${city}, ${state}`
   }
 
-  async _getElevation (office, gridX, gridY) {
+  async _getGeoInfo (office, gridX, gridY) {
     const url = `https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast`
 
     try {
@@ -95,24 +99,56 @@ class WeatherAPI {
 
     if (result == null) return null
 
-    const properties = result.properties
-    if (properties == null) return null
+    const elevation = getElevation(result)
+    const bounds = getBounds(result)
 
-    const elevation = properties.elevation
-    if (properties == null) return null
-
-    const { value, unitCode } = elevation
-    if (value == null) return null
-    if (unitCode == null) return null
-
-    const unit = getUnit(unitCode)
-    if (unit == null) return null
-
-    const feet = unit.convertTo('ft', value)
-    if (feet == null) return null
-
-    return feet
+    return { elevation, bounds }
   }
+}
+
+function getBounds (result) {
+  const geometry = result.geometry
+  if (result == null) return null
+
+  const geometries = geometry.geometries
+  if (result == null) return null
+
+  const polygon = geometries.filter(g => g.type === 'Polygon')[0]
+  if (polygon == null) return null
+
+  // first and past point the same, so remove the first
+  const bounds = polygon.coordinates[0].slice(1)
+
+  // the order is wrong for the lat lngs as well
+  bounds.forEach(bound => {
+    const lng = bound[0]
+    const lat = bound[1]
+
+    bound[0] = lat
+    bound[1] = lng
+  })
+
+  return bounds
+}
+
+function getElevation (result) {
+  const properties = result.properties
+  if (properties == null) return null
+
+  const elevation = properties.elevation
+  if (properties == null) return null
+
+  const { value, unitCode } = elevation
+  if (value == null) return null
+  if (unitCode == null) return null
+
+  const unit = getUnit(unitCode)
+  if (unit == null) return null
+
+  const feet = unit.convertTo('ft', value)
+  if (feet == null) return null
+
+  return feet
 }
 
 export default new WeatherAPI()

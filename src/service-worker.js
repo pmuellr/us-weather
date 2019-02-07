@@ -19,7 +19,6 @@ const URLS = [
   `/${GH_REPO}/index.css`,
   `/${GH_REPO}/main.js`,
   `/${GH_REPO}/manifest.webmanifest`,
-  `/${GH_REPO}/images/us-weather.png`,
   `/${GH_REPO}/images/layers-2x.png`,
   `/${GH_REPO}/images/layers.png`,
   `/${GH_REPO}/images/marker-icon-2x.png`,

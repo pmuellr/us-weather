@@ -45,6 +45,14 @@ export default class AddLocationView extends View {
 AddLocationView.id = 'add-location-view'
 
 function createExistingLocationMarker (map, locationInfo) {
+  const bounds = Leaflet.polygon(locationInfo.bounds, {
+    color: '#0000F0',
+    fillColor: '#F00000',
+    opacity: 0.1,
+    fillOpacity: 0.1
+  })
+  bounds.addTo(map)
+
   const marker = Leaflet.marker([locationInfo.lat, locationInfo.lng])
 
   const container = getLocationPopupContent(locationInfo)
@@ -52,10 +60,12 @@ function createExistingLocationMarker (map, locationInfo) {
   container.appendChild(button)
 
   button.innerHTML = 'delete location'
+  button.setAttribute('style', 'background-color: #E0E0F0')
   button.onclick = () => {
     Store.deleteLocation(locationInfo)
     marker.closePopup()
     marker.remove()
+    bounds.remove()
   }
 
   marker
@@ -65,8 +75,8 @@ function createExistingLocationMarker (map, locationInfo) {
 
 // get the info for the popup
 async function addPopupInfo (map, marker, popup, lat, lng) {
-  lat = round(lat, 3)
-  lng = round(lng, 3)
+  lat = round(lat, 4)
+  lng = round(lng, 4)
   const locationInfo = await WeatherAPI.fetchLocationInfo(lat, lng)
 
   if (locationInfo == null) {
@@ -75,11 +85,24 @@ async function addPopupInfo (map, marker, popup, lat, lng) {
     return
   }
 
+  const bounds = Leaflet.polygon(locationInfo.bounds, {
+    color: '#0000F0',
+    fillColor: '#F00000',
+    opacity: 0.1,
+    fillOpacity: 0.1
+  })
+  bounds.addTo(map)
+
+  marker.addEventListener('popupclose', () => {
+    bounds.remove()
+  })
+
   const container = getLocationPopupContent(locationInfo)
   const button = Leaflet.DomUtil.create('button')
   container.appendChild(button)
 
   button.innerHTML = 'add location'
+  button.setAttribute('style', 'background-color: #E0E0F0')
   button.onclick = () => {
     Store.addLocation(locationInfo)
     marker.closePopup()
@@ -95,10 +118,11 @@ function getLocationPopupContent (locationInfo) {
 
   container.innerHTML = `
     <b>${escapeHtml(locationInfo.name)}</b>
-    <ul>
-      <li>${escapeHtml(locationInfo.lat)}, ${escapeHtml(locationInfo.lng)}</li>
-      <li>elevation: ${escapeHtml(locationInfo.elevation)} ft</li>
-    </ul>
+    <div style='margin-left: 1em;'>
+      ${escapeHtml(locationInfo.lat)},${escapeHtml(locationInfo.lng)}
+      <br/>
+      elevation: ${escapeHtml(locationInfo.elevation)} ft
+    </div>
   `
 
   return container
