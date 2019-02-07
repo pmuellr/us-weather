@@ -14,12 +14,14 @@ PATH="$BASE_DIR/tools:$BASE_DIR/node_modules/.bin:$PATH"
 # clean the dist directory
 rm -rf "$DIST_DIR"
 
-# copy the html
+# copy the base bits
 echo "copying html files"
 mkdir -p "$DIST_DIR"
 cp "$SRC_DIR/"*.html "$DIST_DIR"
 cp "$SRC_DIR/"*.webmanifest "$DIST_DIR"
-cp "$SRC_DIR/"service-worker.js "$DIST_DIR"
+
+# update the service worker cache version
+tools/update-service-worker.js
 
 # copy the images
 echo "copying image files"

@@ -10,7 +10,7 @@ const GH_REPO = 'us-weather'
 const APP_PREFIX = 'US_Weather_'
 
 // Version of the off-line cache (change this value everytime you want to update cache)
-const VERSION = 'version_02'
+const VERSION = '2019-02-07T00:00:21.319Z'
 
 const CACHE_NAME = APP_PREFIX + VERSION
 
