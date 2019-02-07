@@ -33,12 +33,20 @@ export default class WeatherSummaryView extends View {
     contentElement.addEventListener('click', handleClick)
     this.removeListeners.push(() => contentElement.removeEventListener('click', handleClick))
 
+    window.addEventListener('keydown', handleKeyDown)
+    this.removeListeners.push(() => window.removeEventListener('keydown', handleKeyDown))
+
     function handleClick (event) {
       if (event.clientX < contentElement.clientWidth / 2) {
         Store.decrCurrentLocation()
       } else {
         Store.incrCurrentLocation()
       }
+    }
+
+    function handleKeyDown (event) {
+      if (event.key === 'ArrowLeft') Store.decrCurrentLocation()
+      if (event.key === 'ArrowRight') Store.incrCurrentLocation()
     }
   }
 
