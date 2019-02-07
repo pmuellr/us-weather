@@ -7,14 +7,15 @@
 const GH_REPO = 'us-weather'
 
 // Identifier for this app (this needs to be consistent across every cache update)
-const APP_PREFIX = 'US_Weather_'
+const APP_PREFIX = 'US_Weather'
 
 // Version of the off-line cache (change this value everytime you want to update cache)
-const VERSION = '2019-02-07T13:41:24.632Z'
+const VERSION = '2019-02-07T17:11:55.835Z'
 
-const CACHE_NAME = APP_PREFIX + VERSION
+const CACHE_NAME = `${APP_PREFIX}_${VERSION}`
 
 const URLS = [
+  `/${GH_REPO}/build-info.js`,
   `/${GH_REPO}/index.html`,
   `/${GH_REPO}/index.css`,
   `/${GH_REPO}/main.js`,

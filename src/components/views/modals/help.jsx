@@ -5,9 +5,13 @@ import React from 'react'
 import Modal from './modal.jsx'
 import ToolBarIcon from '../../tool-bar-icon.jsx'
 
+const buildInfo = window.US_Weather_metadata || {}
+const builtOn = buildInfo.builtOn || 'unknown'
+
 export default class HelpModal extends Modal {
   render () {
     return <div>
+      <p>version: {builtOn}</p>
 
       <h3>toolbar icons</h3>
 

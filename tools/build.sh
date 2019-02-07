@@ -21,7 +21,7 @@ cp "$SRC_DIR/"*.html "$DIST_DIR"
 cp "$SRC_DIR/"*.webmanifest "$DIST_DIR"
 
 # update the service worker cache version
-tools/update-service-worker.js
+tools/update-build-info.js
 
 # copy the images
 echo "copying image files"
@@ -56,8 +56,3 @@ if [ $RC -ne 0 ]
 then
   exit $RC
 fi
-
-# update built-on.txt file
-echo ""
-date "+%Y-%m-%d %H:%M:%S" > $DIST_DIR/built-on.txt
-exit 0
