@@ -9,15 +9,14 @@ import useDomEvent from '../hooks/use-dom-event'
 import useNodeEvent from '../hooks/use-node-event'
 
 import Store from '../../lib/store'
-import setImmediate from '../../lib/set-immediate'
 
 export default function WeatherSummaryPage (props) {
   const [ location, setLocation ] = useState(Store.getCurrentLocation())
-  const [ summary, setSummary ] = useState(null)
+  const [ summary, setSummary ] = useState(Store.getWeatherSummary(location))
 
   useNodeEvent(Store, 'current-location-changed', (location) => {
     setLocation(location)
-    updateWeather(location)
+    setSummary(Store.getWeatherSummary(location))
   })
 
   useNodeEvent(Store, 'weather-summary-changed', (changedLocation, changedSummary) => {
@@ -32,9 +31,6 @@ export default function WeatherSummaryPage (props) {
   })
 
   if (summary == null) {
-    // async request to get summary
-    setImmediate(updateWeather, location)
-
     return (
       <Scrollable>
         <LocationDisplay location={location} />
@@ -56,13 +52,6 @@ export default function WeatherSummaryPage (props) {
       </Scrollable>
     </React.Fragment>
   )
-
-  async function updateWeather (location) {
-    const summary = await Store.getWeatherSummary(location)
-    if (summary == null) return
-
-    setSummary(summary)
-  }
 
   function onClick (event) {
     const contentElement = document.getElementById('content')

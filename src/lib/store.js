@@ -4,6 +4,7 @@ import RemovableEventEmitter from './removable-event-emitter'
 import WeatherAPI from './weather-api'
 import DateCalc from './date-calc'
 
+const STALE_WEATHER_HOURS = 1
 const LocalStorage = window.localStorage
 
 class Store extends RemovableEventEmitter {
@@ -120,26 +121,27 @@ class Store extends RemovableEventEmitter {
     }
   }
 
-  async getWeatherSummary (location) {
+  getWeatherSummary (location) {
     const id = location.id
     let summary = jsonParse(LocalStorage.getItem(`${KEY_WEATHER_SUMMARY}-${id}`))
 
-    if (summary != null) {
-      if (DateCalc.hoursDifferenceFromNow(summary.fetchedAt) > 1) summary = null
+    if (summary == null) {
+      this.updateWeatherSummary(location)
+    } else if (DateCalc.hoursDifferenceFromNow(summary.fetchedAt) > STALE_WEATHER_HOURS) {
+      this.updateWeatherSummary(location)
     }
 
-    if (summary != null) return summary
+    return summary
+  }
 
-    const lastSummary = summary
-
-    summary = await WeatherAPI.fetchWeatherSummary(location)
-    if (summary == null) return lastSummary
+  async updateWeatherSummary (location) {
+    const id = location.id
+    const summary = await WeatherAPI.fetchWeatherSummary(location)
+    if (summary == null) return
 
     LocalStorage.setItem(`${KEY_WEATHER_SUMMARY}-${id}`, JSON.stringify(summary))
 
     this.emit('weather-summary-changed', location, summary)
-
-    return summary
   }
 
   _locationById (id) {
