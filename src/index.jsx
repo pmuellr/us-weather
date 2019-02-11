@@ -12,8 +12,8 @@ if (document.readyState === 'loading') {
 }
 
 async function onLoad () {
-  const isGitHub = (window.location.hostname.endsWith('.github.io'))
-  if (isGitHub) registerServiceWorker()
+  const isLocalHost = (window.location.hostname === 'localhost')
+  if (!isLocalHost) registerServiceWorker()
 
   ReactDOM.render(
     <App />,
@@ -24,5 +24,5 @@ async function onLoad () {
 async function registerServiceWorker () {
   if (navigator.serviceWorker == null) return
 
-  navigator.serviceWorker.register('/us-weather/service-worker.js', { scope: '/us-weather/' })
+  navigator.serviceWorker.register('service-worker.js')
 }
