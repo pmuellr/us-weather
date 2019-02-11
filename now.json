@@ -1,0 +1,10 @@
+{
+  "name": "us-weather",
+  "builds": [
+    { "src": "docs/**/*", "use": "@now/static"}
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/docs/$1"}
+  ],
+  "version": 2
+}
