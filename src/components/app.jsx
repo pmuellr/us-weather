@@ -1,72 +1,59 @@
 'use strict'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import ToolBar from './tool-bar.jsx'
-import NoLocationsModal from './views/modals/no-locations.jsx'
-import HelpModal from './views/modals/help.jsx'
-import WeatherSummaryView from './views/weather-summary.jsx'
-import AddLocationView from './views/add-location.jsx'
-import EditLocationsView from './views/edit-locations.jsx'
+
+import useNodeEvent from './hooks/use-node-event'
+
+import NoLocationsPage from './pages/no-locations.jsx'
+import HelpPage from './pages/help.jsx'
+import WeatherSummaryPage from './pages/weather-summary.jsx'
+import AddLocationPage from './pages/add-location.jsx'
 
 import Store from '../lib/store'
 import setImmediate from '../lib/set-immediate'
 
-export default class App extends React.Component {
-  constructor (props) {
-    super(props)
+export default function App (props) {
+  const [ locations, setLocations ] = useState(Store.getLocations())
+  const [ currentPage, setCurrentPage ] = useState(Store.getCurrentPageId())
 
-    this.state = {
-      locations: Store.getLocations(),
-      currentViewId: Store.getCurrentViewId()
-    }
+  useNodeEvent(Store, 'current-page-changed', (pageId) => {
+    setCurrentPage(pageId)
+  })
 
-    Store.on('current-view-changed', viewId => {
-      if (viewId === this.state.currentViewId) return
+  useNodeEvent(Store, 'locations-changed', (locations) => {
+    setLocations(locations)
+  })
 
-      this.setState({ currentViewId: viewId })
-    })
+  setupWeatherUpdates()
 
-    Store.on('locations-changed', locations => {
-      this.setState({ locations })
-    })
-
-    setupWeatherUpdates()
+  let contents
+  if (currentPage === 'help') {
+    contents = <HelpPage />
+  } else if (currentPage === 'add-location') {
+    contents = <AddLocationPage />
+  } else if (locations.length === 0) {
+    contents = <NoLocationsPage />
+  } else if (currentPage === 'weather-summary') {
+    contents = <WeatherSummaryPage />
+  } else {
+    contents = <HelpPage />
   }
 
-  render () {
-    let contentView
-    if (this.state.currentViewId === HelpModal.id) {
-      contentView = helpModal()
-    } else if (this.state.currentViewId === AddLocationView.id) {
-      contentView = <AddLocationView />
-    } else if (this.state.locations.length === 0) {
-      contentView = noLocationsModal()
-    } else if (this.state.currentViewId === WeatherSummaryView.id) {
-      contentView = weatherSummaryView()
-    } else if (this.state.currentViewId === EditLocationsView.id) {
-      contentView = editLocationsView()
-    } else {
-      contentView = helpModal()
-    }
-
-    return <div id='app'>
+  return (
+    <div id='app'>
       <h1 id='header'>
         <span id='title'>U.S. weather</span>
         <ToolBar />
       </h1>
 
       <div id='content'>
-        {contentView}
+        {contents}
       </div>
     </div>
-  }
+  )
 }
-
-function helpModal () { return <Scrollable> <HelpModal /> </Scrollable> }
-function noLocationsModal () { return <Scrollable> <NoLocationsModal /> </Scrollable> }
-function weatherSummaryView () { return <Scrollable> <WeatherSummaryView /> </Scrollable> }
-function editLocationsView () { return <Scrollable> <EditLocationsView /> </Scrollable> }
 
 function setupWeatherUpdates () {
   setImmediate(update)
@@ -74,13 +61,5 @@ function setupWeatherUpdates () {
 
   function update () {
     Store.updateWeatherInfoIfNeeded()
-  }
-}
-
-class Scrollable extends React.Component {
-  render () {
-    return <div className='y-scrollable'>
-      {this.props.children}
-    </div>
   }
 }

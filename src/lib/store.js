@@ -1,7 +1,6 @@
 'use strict'
 
 import RemovableEventEmitter from './removable-event-emitter'
-import WeatherSummaryView from '../components/views/weather-summary.jsx'
 import WeatherAPI from './weather-api'
 import DateCalc from './date-calc'
 
@@ -11,12 +10,12 @@ class Store extends RemovableEventEmitter {
   constructor () {
     super()
 
-    this._currentViewId = LocalStorage.getItem(KEY_CURRENT_VIEW_ID)
+    this._currentPageId = LocalStorage.getItem(KEY_CURRENT_PAGE_ID)
     this._currentLocationId = LocalStorage.getItem(KEY_CURRENT_LOCATION_ID)
     this._locations = jsonParse(LocalStorage.getItem(KEY_LOCATIONS))
 
-    if (this._currentView == null) {
-      this._currentView = WeatherSummaryView.id
+    if (this._currentPageId == null) {
+      this._currentPageId = 'weather-summary'
     }
 
     if (!Array.isArray(this._locations)) {
@@ -30,16 +29,15 @@ class Store extends RemovableEventEmitter {
     }
   }
 
-  getCurrentViewId () {
-    return this._currentViewId
+  getCurrentPageId () {
+    return this._currentPageId
   }
 
-  setCurrentViewId (viewId) {
-    if (viewId.endsWith('-view')) {
-      LocalStorage.setItem(KEY_CURRENT_VIEW_ID, viewId)
-    }
+  setCurrentPageId (pageId) {
+    this._currentPageId = pageId
+    LocalStorage.setItem(KEY_CURRENT_PAGE_ID, pageId)
 
-    this.emit('current-view-changed', viewId)
+    this.emit('current-page-changed', pageId)
   }
 
   incrCurrentLocation () {
@@ -132,10 +130,14 @@ class Store extends RemovableEventEmitter {
 
     if (summary != null) return summary
 
+    const lastSummary = summary
+
     summary = await WeatherAPI.fetchWeatherSummary(location)
-    if (summary == null) return null
+    if (summary == null) return lastSummary
 
     LocalStorage.setItem(`${KEY_WEATHER_SUMMARY}-${id}`, JSON.stringify(summary))
+
+    this.emit('weather-summary-changed', location, summary)
 
     return summary
   }
@@ -161,7 +163,7 @@ class Store extends RemovableEventEmitter {
 }
 
 const KEY_PREFIX = `us-weather`
-const KEY_CURRENT_VIEW_ID = `${KEY_PREFIX}-current-view-id`
+const KEY_CURRENT_PAGE_ID = `${KEY_PREFIX}-current-page-id`
 const KEY_CURRENT_LOCATION_ID = `${KEY_PREFIX}-current-location-id`
 const KEY_LOCATIONS = `${KEY_PREFIX}-locations`
 const KEY_WEATHER_SUMMARY = `${KEY_PREFIX}-weather-summary`

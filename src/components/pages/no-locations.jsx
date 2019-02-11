@@ -2,12 +2,12 @@
 
 import React from 'react'
 
-import Modal from './modal.jsx'
-import ToolBarIcon from '../../tool-bar-icon.jsx'
+import Scrollable from '../scrollable.jsx'
+import ToolBarIcon from '../tool-bar-icon.jsx'
 
-export default class NoLocationsModal extends Modal {
-  render () {
-    return <div>
+export default function NoLocationsPage (props) {
+  return (
+    <Scrollable>
       <p>You haven't added any locations yet.</p>
 
       <p>
@@ -17,8 +17,6 @@ export default class NoLocationsModal extends Modal {
         </span>
         button in the toolbar above.
       </p>
-    </div>
-  }
+    </Scrollable>
+  )
 }
-
-NoLocationsModal.id = 'no-locations-modal'

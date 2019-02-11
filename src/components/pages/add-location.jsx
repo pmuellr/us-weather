@@ -2,12 +2,11 @@
 import React from 'react'
 import Leaflet from '../../lib/leaflet'
 
-import View from './view.jsx'
 import WeatherAPI from '../../lib/weather-api'
 import round from '../../lib/round'
 import Store from '../../lib/store'
 
-export default class AddLocationView extends View {
+export default class AddLocationView extends React.Component {
   render () {
     return <div id='map' />
   }
@@ -139,9 +138,4 @@ function escapeHtml (string) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-}
-
-window.usWeatherAddLocation = async function addLocation (lat, lng) {
-  const locationInfo = await WeatherAPI.fetchLocationInfo(lat, lng)
-  Store.addLocation(locationInfo)
 }

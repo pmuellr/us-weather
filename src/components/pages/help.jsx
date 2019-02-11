@@ -2,15 +2,16 @@
 
 import React from 'react'
 
-import Modal from './modal.jsx'
-import ToolBarIcon from '../../tool-bar-icon.jsx'
+import Scrollable from '../scrollable.jsx'
+
+import ToolBarIcon from '../tool-bar-icon.jsx'
 
 const buildInfo = window.US_Weather_metadata || {}
 const builtOn = buildInfo.builtOn || 'unknown'
 
-export default class HelpModal extends Modal {
-  render () {
-    return <div>
+export default function HelpPage (props) {
+  return (
+    <Scrollable>
       <p>version: {builtOn}</p>
 
       <h3>toolbar icons</h3>
@@ -23,10 +24,6 @@ export default class HelpModal extends Modal {
         <p>
           <ToolBarIcon icon='add_location' title='add a location' />
           adds a location
-        </p>
-        <p>
-          <ToolBarIcon icon='edit_location' title='edit locations' />
-          edit existing locations
         </p>
         <p>
           <ToolBarIcon icon='help' title='help' />
@@ -76,8 +73,6 @@ export default class HelpModal extends Modal {
         </li>
       </ul>
 
-    </div>
-  }
+    </Scrollable>
+  )
 }
-
-HelpModal.id = 'help-modal'
