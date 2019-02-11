@@ -6,5 +6,8 @@
   "routes": [
     { "src": "/(.*)", "dest": "/docs/$1"}
   ],
+  "alias": [
+    "us-weather.muellerware.tech"
+  ],
   "version": 2
 }
