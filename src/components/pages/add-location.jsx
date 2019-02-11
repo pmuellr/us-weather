@@ -1,47 +1,68 @@
 'use strict'
-import React from 'react'
-import Leaflet from '../../lib/leaflet'
+import React, { useEffect } from 'react'
 
+import Leaflet from '../../lib/leaflet'
 import WeatherAPI from '../../lib/weather-api'
 import round from '../../lib/round'
 import Store from '../../lib/store'
 
-export default class AddLocationView extends React.Component {
-  render () {
-    return <div id='map' />
-  }
+export default function AddLocationView (props) {
+  let map = null
 
-  componentDidMount () {
-    const map = Leaflet.map('map').setView([39.828175, -98.5795], 4)
+  useEffect(initialize, [])
+
+  return (
+    <div id='map' />
+  )
+
+  function initialize () {
+    const zoomControl = false
+    const attributionControl = false
+    map = Leaflet.map('map', { zoomControl, attributionControl })
+
+    map.on('click', mapClicked)
 
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map)
 
-    for (let locationInfo of Store.getLocations()) {
+    const locationInfos = Store.getLocations()
+    for (let locationInfo of locationInfos) {
       createExistingLocationMarker(map, locationInfo)
     }
 
-    map.on('click', async mouseEvent => {
-      const { lat, lng } = mouseEvent.latlng
+    if (locationInfos.length === 0) {
+      map.fitBounds(USBounds)
+    } else if (locationInfos.length === 1) {
+      map.setView(locationInfos[0], 7)
+    } else {
+      const paddingTopLeft = [40, 40]
+      const paddingBottomRight = [40, 40]
+      map.fitBounds(locationInfos, { paddingTopLeft, paddingBottomRight })
+    }
 
-      const marker = Leaflet.marker([lat, lng])
-      marker
-        .addTo(map)
-        .bindPopup('looking up location ...')
-        .openPopup()
+    return function terminate () {
+      map.off('click', mapClicked)
+    }
+  }
 
-      const popup = marker.getPopup()
-      addPopupInfo(map, marker, popup, lat, lng)
+  async function mapClicked (mouseEvent) {
+    const { lat, lng } = mouseEvent.latlng
 
-      marker.addEventListener('popupclose', () => {
-        marker.remove()
-      })
+    const marker = Leaflet.marker([lat, lng])
+    marker
+      .addTo(map)
+      .bindPopup('looking up location ...')
+      .openPopup()
+
+    const popup = marker.getPopup()
+    addPopupInfo(map, marker, popup, lat, lng)
+
+    marker.addEventListener('popupclose', () => {
+      marker.remove()
     })
   }
 }
-
-AddLocationView.id = 'add-location-view'
 
 function createExistingLocationMarker (map, locationInfo) {
   let bounds = null
@@ -139,3 +160,8 @@ function escapeHtml (string) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
 }
+
+const USBounds = [
+  [ 49, -65 ], // north east
+  [ 25, -125 ] // south west
+]
