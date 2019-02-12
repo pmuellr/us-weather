@@ -40,17 +40,21 @@ export default function WeatherSummaryPage (props) {
   }
 
   return (
-    <React.Fragment>
-      <Scrollable onClick={onClick}>
+    <div className='headerAndContentGrid'>
+      <div className='headerCell'>
         <LocationDisplay location={location} updatedAt={summary.updatedAt} />
-        {summary.periods.map(period =>
-          <div key={period.number}>
-            <h4 className='weather-summary-period-title'>{period.name}</h4>
-            <p className='weather-summary-period-text'>{period.detailedForecast}</p>
-          </div>
-        )}
-      </Scrollable>
-    </React.Fragment>
+      </div>
+      <div className='contentCell'>
+        <Scrollable onClick={onClick}>
+          {summary.periods.map(period =>
+            <div key={period.number}>
+              <h4 className='weather-summary-period-title'>{period.name}</h4>
+              <p className='weather-summary-period-text'>{period.detailedForecast}</p>
+            </div>
+          )}
+        </Scrollable>
+      </div>
+    </div>
   )
 
   function onClick (event) {
