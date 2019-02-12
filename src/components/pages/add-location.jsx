@@ -1,5 +1,5 @@
 'use strict'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import Leaflet from '../../lib/leaflet'
 import WeatherAPI from '../../lib/weather-api'
@@ -9,10 +9,12 @@ import Store from '../../lib/store'
 export default function AddLocationView (props) {
   let map = null
 
+  const mapDiv = useRef(null)
+
   useEffect(initialize, [])
 
   return (
-    <div id='map' />
+    <div id='map' ref={mapDiv} tabIndex='0' />
   )
 
   function initialize () {
@@ -40,6 +42,9 @@ export default function AddLocationView (props) {
       const paddingBottomRight = [40, 40]
       map.fitBounds(locationInfos, { paddingTopLeft, paddingBottomRight })
     }
+
+    // allows keyboard navigation of map
+    mapDiv.current.focus()
 
     return function terminate () {
       map.off('click', mapClicked)
