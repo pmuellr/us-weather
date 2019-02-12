@@ -17,6 +17,22 @@ export default function NoLocationsPage (props) {
         </span>
         button in the toolbar above.
       </p>
+
+      <p>
+        After adding a location or two, come back to this page by clicking the
+        <span className='tool-icons'>
+          <ToolBarIcon icon='wb_sunny' title='display weather summary' />
+        </span>
+        button in the toolbar above, to see the locations' weather summaries.
+      </p>
+
+      <p>
+        Then visit the help page by clicking the
+        <span className='tool-icons'>
+          <ToolBarIcon icon='help' title='help' />
+        </span>
+        button in the toolbar above, to get more information about this app.
+      </p>
     </Scrollable>
   )
 }
