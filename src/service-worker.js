@@ -30,6 +30,9 @@ const URLS = [
   `${PATH_PREFIX}/images/material-design/ic_edit_location_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_help_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_wb_sunny_black_48dp.png`,
+  `${PATH_PREFIX}/images/material-design/ic_show_chart_black_48dp.png`,
+  `${PATH_PREFIX}/images/material-design/ic_star_black_48dp.png`,
+  `${PATH_PREFIX}/images/material-design/ic_text_format_black_48dp.png`,
   `${PATH_PREFIX}/`
 ]
 

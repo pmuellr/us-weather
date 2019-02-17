@@ -28,6 +28,14 @@ export default function AddLocationView (props) {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map)
 
+    const wmsUrl = 'https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer?'
+    Leaflet.tileLayer.wms(wmsUrl, {
+      layers: '1',
+      format: 'image/png',
+      transparent: true,
+      opacity: 0.3
+    }).addTo(map)
+
     const locationInfos = Store.getLocations()
     for (let locationInfo of locationInfos) {
       createExistingLocationMarker(map, locationInfo)
