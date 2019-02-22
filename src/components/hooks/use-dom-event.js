@@ -19,5 +19,5 @@ export default function useDomEvent (eventSource, eventName, eventArgs, eventHan
     return () => {
       eventSource.removeEventListener(eventName, eventHandler, eventArgs)
     }
-  }, []) // the [] indicates only runs on mount/unmount)
+  })
 }

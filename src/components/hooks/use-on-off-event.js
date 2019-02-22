@@ -13,5 +13,5 @@ export default function useNodeEvent (eventSource, eventName, eventHandler) {
     return () => {
       eventSource.off(eventName, eventHandler)
     }
-  }, []) // the [] indicates only runs on mount/unmount
+  })
 }

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 import ToolBar from './tool-bar.jsx'
 
-import useNodeEvent from './hooks/use-node-event'
+import useOnOffEvent from './hooks/use-on-off-event'
 
 import NoLocationsPage from './pages/no-locations.jsx'
 import HelpPage from './pages/help.jsx'
@@ -18,11 +18,11 @@ export default function App (props) {
   const [ locations, setLocations ] = useState(Store.getLocations())
   const [ currentPage, setCurrentPage ] = useState(Store.getCurrentPageId())
 
-  useNodeEvent(Store, 'current-page-changed', (pageId) => {
+  useOnOffEvent(Store, 'current-page-changed', (pageId) => {
     setCurrentPage(pageId)
   })
 
-  useNodeEvent(Store, 'locations-changed', (locations) => {
+  useOnOffEvent(Store, 'locations-changed', (locations) => {
     setLocations(locations)
   })
 

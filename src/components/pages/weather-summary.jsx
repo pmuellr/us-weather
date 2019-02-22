@@ -6,7 +6,7 @@ import LocationDisplay from '../location-display.jsx'
 import Scrollable from '../scrollable.jsx'
 
 import useDomEvent from '../hooks/use-dom-event'
-import useNodeEvent from '../hooks/use-node-event'
+import useOnOffEvent from '../hooks/use-on-off-event'
 
 import Store from '../../lib/store'
 
@@ -14,12 +14,12 @@ export default function WeatherSummaryPage (props) {
   const [ location, setLocation ] = useState(Store.getCurrentLocation())
   const [ summary, setSummary ] = useState(Store.getWeatherSummary(location))
 
-  useNodeEvent(Store, 'current-location-changed', (location) => {
+  useOnOffEvent(Store, 'current-location-changed', (location) => {
     setLocation(location)
     setSummary(Store.getWeatherSummary(location))
   })
 
-  useNodeEvent(Store, 'weather-summary-changed', (changedLocation, changedSummary) => {
+  useOnOffEvent(Store, 'weather-summary-changed', (changedLocation, changedSummary) => {
     if (changedLocation !== location) return
 
     setSummary(changedSummary)
