@@ -18,6 +18,7 @@ const URLS = [
   `${PATH_PREFIX}/build-info.js`,
   `${PATH_PREFIX}/index.html`,
   `${PATH_PREFIX}/index.css`,
+  `${PATH_PREFIX}/leaflet.css`,
   `${PATH_PREFIX}/main.js`,
   `${PATH_PREFIX}/manifest.webmanifest`,
   `${PATH_PREFIX}/images/layers-2x.png`,
@@ -29,10 +30,10 @@ const URLS = [
   `${PATH_PREFIX}/images/material-design/ic_add_location_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_edit_location_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_help_black_48dp.png`,
-  `${PATH_PREFIX}/images/material-design/ic_wb_sunny_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_show_chart_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_star_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_text_format_black_48dp.png`,
+  `${PATH_PREFIX}/images/material-design/ic_wb_sunny_black_48dp.png`,
   `${PATH_PREFIX}/`
 ]
 

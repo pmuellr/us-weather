@@ -22,9 +22,8 @@ class WeatherAPI {
     if (properties == null) return null
 
     const { cwa, gridX, gridY, timeZone } = properties
-    const office = cwa
-
     if (cwa == null || gridX == null || gridY == null) return null
+    const office = cwa
 
     const name = this._getName(properties)
 
@@ -107,23 +106,21 @@ class WeatherAPI {
 }
 
 function getBounds (result) {
+  if (result == null) return null
+
   const geometry = result.geometry
-  if (result == null) return null
+  if (geometry == null) return null
 
-  const geometries = geometry.geometries
-  if (result == null) return null
-
-  const polygon = geometries.filter(g => g.type === 'Polygon')[0]
-  if (polygon == null) return null
+  const coordinates = geometry.coordinates
+  if (coordinates == null) return null
 
   // first and past point the same, so remove the first
-  const bounds = polygon.coordinates[0].slice(1)
+  const bounds = coordinates[0].slice(1)
 
   // the order is wrong for the lat lngs as well
   bounds.forEach(bound => {
     const lng = bound[0]
     const lat = bound[1]
-
     bound[0] = lat
     bound[1] = lng
   })
