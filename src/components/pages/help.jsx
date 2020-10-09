@@ -62,14 +62,16 @@ export default function HelpPage (props) {
           <p>meta-data for a particular geographic location<br />
             <a href='https://api.weather.gov/points/35.70539,-78.7963'>
               https://api.weather.gov/points/35.70539,-78.7963
-            </a></p>
+            </a>
+          </p>
         </li>
 
         <li>
           <p>documentation on the APIs:<br />
             <a href='https://forecast-v3.weather.gov/documentation'>
               https://forecast-v3.weather.gov/documentation
-            </a></p>
+            </a>
+          </p>
         </li>
       </ul>
 

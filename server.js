@@ -41,7 +41,7 @@ async function start (options) {
 
   // error handler
   app.use(function errorHandler (err, req, res, next) {
-    console.log(`error processing request:`, err)
+    console.log('error processing request:', err)
 
     // if headers sent, let default express error handler handle it
     if (res.headersSent) return next(err)

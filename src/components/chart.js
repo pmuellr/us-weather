@@ -3,7 +3,7 @@
 /* global c3, fetch */
 
 export async function buildCharts () {
-  const data = await getJSON(`/api/v1/forecast/time-series?location=35.70539,-78.7963`)
+  const data = await getJSON('/api/v1/forecast/time-series?location=35.70539,-78.7963')
 
   buildChart('#chart1', data, ['temperature', 'windChill'])
   buildChart('#chart2', data, ['probabilityOfPrecipitation', 'skyCover'])
@@ -14,7 +14,7 @@ export async function buildCharts () {
 async function buildChart (id, data, properties) {
   const columns = []
 
-  for (let property of properties) {
+  for (const property of properties) {
     const values = getDataForProperty(data, property)
     values.unshift(property)
     columns.push(values)

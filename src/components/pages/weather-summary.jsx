@@ -11,8 +11,8 @@ import useOnOffEvent from '../hooks/use-on-off-event'
 import Store from '../../lib/store'
 
 export default function WeatherSummaryPage (props) {
-  const [ location, setLocation ] = useState(Store.getCurrentLocation())
-  const [ summary, setSummary ] = useState(Store.getWeatherSummary(location))
+  const [location, setLocation] = useState(Store.getCurrentLocation())
+  const [summary, setSummary] = useState(Store.getWeatherSummary(location))
 
   useOnOffEvent(Store, 'current-location-changed', (location) => {
     setLocation(location)

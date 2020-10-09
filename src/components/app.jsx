@@ -15,8 +15,8 @@ import Store from '../lib/store'
 import setImmediate from '../lib/set-immediate'
 
 export default function App (props) {
-  const [ locations, setLocations ] = useState(Store.getLocations())
-  const [ currentPage, setCurrentPage ] = useState(Store.getCurrentPageId())
+  const [locations, setLocations] = useState(Store.getLocations())
+  const [currentPage, setCurrentPage] = useState(Store.getCurrentPageId())
 
   useOnOffEvent(Store, 'current-page-changed', (pageId) => {
     setCurrentPage(pageId)

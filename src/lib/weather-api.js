@@ -1,6 +1,6 @@
 'use strict'
 
-import uuidV4 from 'uuid/v4'
+import { v4 as uuidV4 } from 'uuid'
 
 import fetchJSON from './fetch-json'
 import { getUnit } from './units'

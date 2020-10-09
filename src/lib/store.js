@@ -42,7 +42,7 @@ class Store extends RemovableEventEmitter {
   }
 
   incrCurrentLocation () {
-    let location = this.getCurrentLocation()
+    const location = this.getCurrentLocation()
     if (location == null) return null
 
     let index = this._locationIndex(location)
@@ -54,7 +54,7 @@ class Store extends RemovableEventEmitter {
   }
 
   decrCurrentLocation () {
-    let location = this.getCurrentLocation()
+    const location = this.getCurrentLocation()
     if (location == null) return null
 
     let index = this._locationIndex(location)
@@ -66,7 +66,7 @@ class Store extends RemovableEventEmitter {
   }
 
   getCurrentLocation () {
-    let location = this._locationById(this._currentLocationId)
+    const location = this._locationById(this._currentLocationId)
     if (location != null) return location
     if (this._locations.length === 0) return null
 
@@ -116,14 +116,14 @@ class Store extends RemovableEventEmitter {
   }
 
   async updateWeatherInfoIfNeeded () {
-    for (let location of this.getLocations()) {
+    for (const location of this.getLocations()) {
       this.getWeatherSummary(location)
     }
   }
 
   getWeatherSummary (location) {
     const id = location.id
-    let summary = jsonParse(LocalStorage.getItem(`${KEY_WEATHER_SUMMARY}-${id}`))
+    const summary = jsonParse(LocalStorage.getItem(`${KEY_WEATHER_SUMMARY}-${id}`))
 
     if (summary == null) {
       this.updateWeatherSummary(location)
@@ -147,7 +147,7 @@ class Store extends RemovableEventEmitter {
   _locationById (id) {
     if (id == null) return null
 
-    for (let location of this._locations) {
+    for (const location of this._locations) {
       if (location.id === id) return location
     }
 
@@ -164,7 +164,7 @@ class Store extends RemovableEventEmitter {
   }
 }
 
-const KEY_PREFIX = `us-weather`
+const KEY_PREFIX = 'us-weather'
 const KEY_CURRENT_PAGE_ID = `${KEY_PREFIX}-current-page-id`
 const KEY_CURRENT_LOCATION_ID = `${KEY_PREFIX}-current-location-id`
 const KEY_LOCATIONS = `${KEY_PREFIX}-locations`

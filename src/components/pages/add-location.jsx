@@ -37,7 +37,7 @@ export default function AddLocationView (props) {
     }).addTo(map)
 
     const locationInfos = Store.getLocations()
-    for (let locationInfo of locationInfos) {
+    for (const locationInfo of locationInfos) {
       createExistingLocationMarker(map, locationInfo)
     }
 
@@ -175,6 +175,6 @@ function escapeHtml (string) {
 }
 
 const USBounds = [
-  [ 49, -65 ], // north east
-  [ 25, -125 ] // south west
+  [49, -65], // north east
+  [25, -125] // south west
 ]
