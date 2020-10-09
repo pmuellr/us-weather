@@ -1,11 +1,10 @@
-// variables
-
-@header-text-color:              #0000A0;
-@body-background-color:          #F0F8FF;
-@body-background-dev-color:      #FFF0F0;
-@tool-bar-icon-background-color: #f0e0b0;
-
-// directives
+/* variables */
+:root {
+  --header-text-color:              #0000A0;
+  --body-background-color:          #F0F8FF;
+  --body-background-dev-color:      #FFF0F0;
+  --tool-bar-icon-background-color: #f0e0b0;
+}
 
 * {
   box-sizing: border-box;
@@ -21,18 +20,18 @@ html, body, #app-wrapper, #app {
 }
 
 body {
-  background-color: @body-background-color;
+  background-color: var(--body-background-color);
   font-family: Helvetica;
   padding: 0.5em;
   font-size: 120%;
 }
 
 body.dev-mode {
-  background-color: @body-background-dev-color;
+  background-color: var(--body-background-dev-color);
 }
 
-// a general grid layout with fixed header and expandable content
-.headerAndContentGrid {
+/* a general grid layout with fixed header and expandable content */
+#app, .headerAndContentGrid {
   display: grid;
   overflow: hidden;
   grid-template-columns: 100%;
@@ -47,8 +46,8 @@ body.dev-mode {
   height: 100%;
 }
 
-// the header part of the grid layout
-.headerCell {
+/* the header part of the grid layout */
+#header, .headerCell {
   grid-area: headerCell;
   width: 100%;
   min-height: 0;
@@ -56,24 +55,23 @@ body.dev-mode {
   margin-bottom: 2px;
 }
 
-// the content part of the grid layout
-.contentCell {
+#header {
+  color: var(--header-text-color);
+}
+
+/* the content part of the grid layout */
+#content, .contentCell {
   grid-area: contentCell;
   width: 100%;
   min-height: 0;
 }
 
-#app {
-  .headerAndContentGrid();
+#content {
+  border-top: thin solid var(--header-text-color);
 }
 
 h1 {
   font-size: 1.5em;
-}
-
-#header {
-  .headerCell();
-  color: @header-text-color;
 }
 
 #title {
@@ -96,14 +94,9 @@ h1 {
   margin: 0 5px;
   border-radius: 5px;
   outline: none;
-  color: @header-text-color;
-  border-color: @header-text-color;
-  background-color: @tool-bar-icon-background-color;
-}
-
-#content {
-  .contentCell();
-  border-top: thin solid @header-text-color;
+  color: var(--header-text-color);
+  border-color: var(--header-text-color);
+  background-color: var(--tool-bar-icon-background-color);
 }
 
 #map {
@@ -141,5 +134,3 @@ h1 {
   margin-left: 1em;
   margin-top: 0;
 }
-
-@import (inline) "node_modules/leaflet/dist/leaflet.css";

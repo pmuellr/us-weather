@@ -31,15 +31,19 @@ cp -R "$SRC_DIR/images/" "$DIST_DIR/images"
 # copy leaflet images
 cp -R "$NODE_MODULES_DIR/leaflet/dist/images/" "$DIST_DIR/images"
 
+# copy css
+cp "$SRC_DIR/css/index.css" "$DIST_DIR/index.css"
+cp "$NODE_MODULES_DIR/leaflet/dist/leaflet.css" "$DIST_DIR/leaflet.css"
+
 # build css 
-echo ""
-echo "building css files"
-lessc "$SRC_DIR/css/index.less" "$DIST_DIR/index.css"
-RC=$?
-if [ $RC -ne 0 ]
-then
-  exit $RC
-fi
+# echo ""
+# echo "building css files"
+# lessc "$SRC_DIR/css/index.less" "$DIST_DIR/index.css"
+# RC=$?
+# if [ $RC -ne 0 ]
+# then
+#   exit $RC
+# fi
 
 # check for dev mode
 WEBPACK_ARGS=

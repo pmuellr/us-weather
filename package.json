@@ -7,12 +7,11 @@
   "homepage": "https://github.com/pmuellr/us-weather",
   "scripts": {
     "build": "tools/build.sh",
-    "check-deps": "tools/check-deps.sh",
     "standard": "standard --verbose",
     "utest": "tap test/test-*.js",
     "test": "standard --verbose && npm -s run utest",
     "watch": "nodemon --exec 'npm run -s standard && npm run -s build && npm run -s server'",
-    "server": "node --inspect=9230 server.js"
+    "serve": "serve"
   },
   "repository": {
     "type": "git",

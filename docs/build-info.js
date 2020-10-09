@@ -1,5 +1,5 @@
 'use strict'
 
 window.US_Weather_metadata = {
-  builtOn: '2019-02-22T20:56:25.679Z'
+  builtOn: '2020-10-09T17:46:46.942Z'
 }
