@@ -27,6 +27,7 @@ const URLS = [
   `${PATH_PREFIX}/images/marker-icon.png`,
   `${PATH_PREFIX}/images/marker-shadow.png`,
   `${PATH_PREFIX}/images/us-weather.png`,
+  `${PATH_PREFIX}/images/us-weather-full.png`,
   `${PATH_PREFIX}/images/material-design/ic_add_location_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_edit_location_black_48dp.png`,
   `${PATH_PREFIX}/images/material-design/ic_help_black_48dp.png`,
