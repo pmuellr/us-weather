@@ -58,21 +58,8 @@ export default function HelpPage (props) {
       </p>
 
       <ul>
-        <li>
-          <p>meta-data for a particular geographic location<br />
-            <a href='https://api.weather.gov/points/35.70539,-78.7963'>
-              https://api.weather.gov/points/35.70539,-78.7963
-            </a>
-          </p>
-        </li>
-
-        <li>
-          <p>documentation on the APIs:<br />
-            <a href='https://forecast-v3.weather.gov/documentation'>
-              https://forecast-v3.weather.gov/documentation
-            </a>
-          </p>
-        </li>
+        <li><a href='https://www.weather.gov/documentation/services-web-api'>documentation on the NWS API Web Service</a></li>
+        <li><a href='https://api.weather.gov/points/35.70539,-78.7963'>example meta-data for a particular geographic location</a></li>
       </ul>
 
     </Scrollable>
