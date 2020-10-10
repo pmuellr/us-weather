@@ -16,7 +16,7 @@ module.exports = env => {
   return {
     entry: entryFile,
     optimization: {
-      minimize: false
+      minimize: mode === 'production'
     },
     output: {
       path: path.resolve(__dirname, 'docs'),

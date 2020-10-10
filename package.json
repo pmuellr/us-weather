@@ -1,5 +1,6 @@
 {
   "name": "us-weather",
+  "type": "module",
   "version": "0.0.0",
   "description": "web app to display weather info from the NWS",
   "license": "MIT",
@@ -10,7 +11,7 @@
     "standard": "standard --verbose",
     "utest": "tap test/test-*.js",
     "test": "standard --verbose && npm -s run utest",
-    "watch": "nodemon --exec 'npm run -s standard && npm run -s build && npm run -s server'",
+    "watch": "nodemon --exec 'npm run -s standard && npm run -s build'",
     "serve": "serve"
   },
   "repository": {

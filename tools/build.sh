@@ -58,5 +58,6 @@ webpack $WEBPACK_ARGS
 RC=$?
 if [ $RC -ne 0 ]
 then
-  exit $RC
+  echo "----- webpack returned with $RC"
+  exit 0
 fi

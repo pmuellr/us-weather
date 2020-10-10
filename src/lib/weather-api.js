@@ -1,9 +1,12 @@
 'use strict'
 
+/** @typedef { import('./types').WeatherValues } WeatherValues */
+
 import { v4 as uuidV4 } from 'uuid'
 
 import fetchJSON from './fetch-json'
 import { getUnit } from './units'
+import { gridPointsToWeatherData } from './grid-points'
 
 class WeatherAPI {
   // fetch location info
@@ -46,14 +49,14 @@ class WeatherAPI {
   // fetch weather summary
   async fetchWeatherSummary (locationInfo) {
     const { office, gridX, gridY } = locationInfo
-    const url = `https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast`
 
+    let url = `https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast`
+    let result
     try {
-      var result = await fetchJSON(url)
+      result = await fetchJSON(url)
     } catch (err) {
       return null
     }
-
     if (result == null) return null
 
     const properties = result.properties
@@ -65,11 +68,17 @@ class WeatherAPI {
 
     if (!Array.isArray(periods)) return null
 
-    return { updatedAt, fetchedAt, periods }
-  }
+    url = `https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}`
+    try {
+      result = await fetchJSON(url)
+    } catch (err) {
+      return null
+    }
+    if (result == null) return null
 
-  // fetch weather forecast
-  async fetchWeatherForecast (locationInfo) {
+    const gridPoints = gridPointsToWeatherData(result)
+
+    return { updatedAt, fetchedAt, periods, gridPoints }
   }
 
   // get the location name from the properties
