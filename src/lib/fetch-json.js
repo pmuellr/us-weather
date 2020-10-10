@@ -10,6 +10,8 @@ export default async function fetchJSON (url) {
   let attempt = 1
   let lastError
 
+  console.warn(`fetchJSON("${url}") started`)
+
   while (attempt <= MAX_ATTEMPTS) {
     const result = fetchJSONOnce(url)
     if (result && result.error == null) {

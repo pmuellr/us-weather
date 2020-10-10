@@ -10,7 +10,7 @@ const PATH_PREFIX = getPathPrefix()
 const APP_PREFIX = 'US_Weather'
 
 // Version of the off-line cache (change this value everytime you want to update cache)
-const VERSION = '2020-10-10T21:56:20.981Z'
+const VERSION = '2020-10-10T22:28:53.075Z'
 
 const CACHE_NAME = `${APP_PREFIX}_${VERSION}`
 
