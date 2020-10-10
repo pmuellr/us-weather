@@ -21,8 +21,39 @@ async function onLoad () {
   )
 }
 
-async function registerServiceWorker () {
-  if (navigator.serviceWorker == null) return
+/** @type { ServiceWorkerRegistration } */
+let serviceWorkerRegistration
 
-  navigator.serviceWorker.register('service-worker.js')
+async function registerServiceWorker () {
+  const activity = 'registering service worker'
+  console.log(activity)
+
+  if (navigator.serviceWorker == null) {
+    console.log(`${activity}: serviceWorker not available`)
+    return
+  }
+
+  try {
+    serviceWorkerRegistration = await navigator.serviceWorker.register('service-worker.js')
+    console.log(`${activity}: success: `, serviceWorkerRegistration)
+  } catch (err) {
+    console.log(`${activity}: error:,`, err)
+  }
+}
+
+window.updateServiceWorker = async function () {
+  const activity = 'manually updating service worker'
+  console.log(activity)
+
+  if (!serviceWorkerRegistration) {
+    console.log(`${activity}: registration not set`)
+    return
+  }
+
+  try {
+    const updateResponse = await serviceWorkerRegistration.update()
+    console.log(`${activity}: success: `, updateResponse)
+  } catch (err) {
+    console.log(`${activity}: error:`, err)
+  }
 }

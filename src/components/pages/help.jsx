@@ -47,6 +47,7 @@ export default function HelpPage (props) {
       <h3>etc</h3>
 
       <p><a href='javascript:window.location.reload()'>Click here to reload the app.</a></p>
+      <p><a href='javascript:window.updateServiceWorker()'>Click here to update the service worker.</a></p>
 
       <p>
         The source for this app is available at Github:&nbsp;
