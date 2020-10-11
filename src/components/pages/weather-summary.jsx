@@ -90,11 +90,16 @@ export default function WeatherSummaryPage (props) {
 }
 
 function getVegaLiteSpec ({ mark, title, axis }) {
+  const markProp = {
+    type: mark
+  }
+  if (mark === 'line') markProp.interpolate = 'bundle'
+
   return {
     title,
     width: 400,
     height: 200,
-    mark: { type: mark, interpolate: 'bundle' },
+    mark: markProp,
     encoding: {
       x: { field: 'date', type: 'temporal' },
       y: { field: 'value', type: 'quantitative', title: axis }

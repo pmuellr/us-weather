@@ -90623,14 +90623,15 @@ function getVegaLiteSpec({
   title,
   axis
 }) {
+  const markProp = {
+    type: mark
+  };
+  if (mark === 'line') markProp.interpolate = 'bundle';
   return {
     title,
     width: 400,
     height: 200,
-    mark: {
-      type: mark,
-      interpolate: 'bundle'
-    },
+    mark: markProp,
     encoding: {
       x: {
         field: 'date',
