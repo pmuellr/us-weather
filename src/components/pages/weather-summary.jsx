@@ -95,15 +95,28 @@ function getVegaLiteSpec ({ mark, title, axis }) {
   }
   if (mark === 'line') markProp.interpolate = 'bundle'
 
+  // https://github.com/d3/d3-time-format#locale_format
+  const xAxis = {
+    format: '%a %e',
+    formatType: 'time',
+    tickCount: 'day'
+  }
+
   return {
     title,
     width: 400,
     height: 200,
-    mark: markProp,
     encoding: {
-      x: { field: 'date', type: 'temporal' },
-      y: { field: 'value', type: 'quantitative', title: axis }
+      x: { field: 'date', type: 'temporal', axis: xAxis }
     },
+    layer: [
+      {
+        mark: markProp,
+        encoding: {
+          y: { field: 'value', type: 'quantitative', title: axis }
+        }
+      }
+    ],
     data: { name: 'table' }
   }
 }
