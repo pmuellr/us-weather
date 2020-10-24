@@ -44,8 +44,8 @@ export default function WeatherSummaryPage (props) {
   const spec2 = getVegaLiteSpec({ mark: 'area', title: 'relative humidity', axis: 'percent' })
   const spec3 = getVegaLiteSpec({ mark: 'area', title: 'sky cover', axis: 'percent' })
   const spec4 = getVegaLiteSpec({ mark: 'line', title: 'wind speed', axis: 'mph' })
-  const spec5 = getVegaLiteSpec({ mark: 'line', title: 'chance of precipitation', axis: 'percent' })
-  const spec6 = getVegaLiteSpec({ mark: 'line', title: 'amount of precipitation', axis: 'inches' })
+  const spec5 = getVegaLiteSpec({ mark: 'area', title: 'chance of precipitation', axis: 'percent' })
+  const spec6 = getVegaLiteSpec({ mark: 'area', title: 'amount of precipitation', axis: 'inches' })
 
   const data1 = { table: summary.gridPoints.temperature }
   const data2 = { table: summary.gridPoints.relativeHumidity }
@@ -91,15 +91,34 @@ export default function WeatherSummaryPage (props) {
 
 function getVegaLiteSpec ({ mark, title, axis }) {
   const markProp = {
-    type: mark
+    type: mark,
+    tooltip: true
   }
   if (mark === 'line') markProp.interpolate = 'bundle'
 
   // https://github.com/d3/d3-time-format#locale_format
+  // %d-%H:%M
+  // '%a %e',
   const xAxis = {
     format: '%a %e',
     formatType: 'time',
-    tickCount: 'day'
+    tickCount: 'day',
+    // tickCount: { interval: 'hour', step: 12 },
+    title: null
+  }
+
+  const yEncoding = {
+    field: 'value',
+    type: 'quantitative',
+    title: axis
+  }
+
+  if (axis === 'percent') {
+    yEncoding.scale = { domain: [0, 100] }
+  } else if (axis === 'inches') {
+    yEncoding.scale = { domain: { unionWith: [0, 2] } }
+  } else if (axis === 'mph') {
+    yEncoding.scale = { domain: { unionWith: [0, 20] } }
   }
 
   return {
@@ -112,9 +131,7 @@ function getVegaLiteSpec ({ mark, title, axis }) {
     layer: [
       {
         mark: markProp,
-        encoding: {
-          y: { field: 'value', type: 'quantitative', title: axis }
-        }
+        encoding: { y: yEncoding }
       }
     ],
     data: { name: 'table' }
